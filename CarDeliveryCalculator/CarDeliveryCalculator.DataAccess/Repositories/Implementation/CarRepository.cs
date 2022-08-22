@@ -1,38 +1,43 @@
 ﻿using CarDeliveryCalculator.DataAccess.Entities;
 using CarDeliveryCalculator.DataAccess.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CarDeliveryCalculator.DataAccess.Repositories.Implementation
 {
     public class CarRepository : ICarRepository
     {
-        public Task AddAsync(Car car)
+        private CarDeliveryDataContext _context;
+
+        public CarRepository(CarDeliveryDataContext context)
         {
-            throw new NotImplementedException();
+            this._context = context;
         }
 
-        public Task DeleteAsync(Car car)
+        public async Task AddAsync(Car car)
         {
-            throw new NotImplementedException();
+            await this._context.Cars.AddAsync(car);
+            await this._context.SaveChangesAsync();
         }
 
-        public Task<ICollection<Car>> GetAllAsync()
+        public async Task DeleteAsync(Car car)
         {
-            throw new NotImplementedException();
+            this._context.Cars.Remove(car);
+            await this._context.SaveChangesAsync();
         }
 
-        public Task<Car> GetByIdAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<ICollection<Car>> GetAllAsync() 
+            => await this._context.Cars.ToListAsync();
 
-        public Task UpdateAsync(Car car)
+        public async Task<Car> GetByIdAsync(int id) 
+            => await this._context.Cars.FirstOrDefaultAsync(x => x.Id == id);
+
+        public async Task UpdateAsync(Car car)
         {
-            throw new NotImplementedException();
+            this._context.Cars.Update(car);
+            await this._context.SaveChangesAsync();
         }
     }
 }
