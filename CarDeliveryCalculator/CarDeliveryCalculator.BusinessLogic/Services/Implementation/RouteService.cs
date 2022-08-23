@@ -13,20 +13,20 @@ namespace CarDeliveryCalculator.BusinessLogic.Services.Implementation
 
         public RouteService(IRouteRepository repository)
         {
-            _repository = repository;
+            this._repository = repository;
         }
 
-        public Task AddAsync(Route route)
-            => this._repository.AddAsync(route);
+        public async Task AddAsync(Route route)
+            =>  await this._repository.AddAsync(route);
 
-        public Task DeleteAsync(Route route)
-            => this._repository.DeleteAsync(route);
+        public async Task DeleteAsync(Route route)
+            => await this._repository.DeleteAsync(route);
 
-        public Task<ICollection<Route>> GetAllAsync()
-            => this._repository.GetAllAsync();
+        public async Task<ICollection<Route>> GetAllAsync()
+            => await this._repository.GetAllAsync();
 
-        public Task<Route> GetByIdAsync(int id)
-            => this._repository.GetByIdAsync(id);
+        public async Task<Route> GetByIdAsync(int id)
+            => await this._repository.GetByIdAsync(id);
 
         public async Task<bool> TryUpdateAsync(int id, Route route)
         {

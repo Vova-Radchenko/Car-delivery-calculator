@@ -15,20 +15,20 @@ namespace CarDeliveryCalculator.BusinessLogic.Services.Implementation
 
         public CarService(ICarRepository repository)
         {
-            _repository = repository;
+            this._repository = repository;
         }
 
-        public Task AddAsync(Car car)
-            => this._repository.AddAsync(car);
+        public async Task AddAsync(Car car)
+            => await this._repository.AddAsync(car);
 
-        public Task DeleteAsync(Car car)
-            => _repository.DeleteAsync(car);
+        public async Task DeleteAsync(Car car)
+            => await _repository.DeleteAsync(car);
 
-        public Task<ICollection<Car>> GetAllAsync()
-            => _repository.GetAllAsync();
+        public async Task<ICollection<Car>> GetAllAsync()
+            => await _repository.GetAllAsync();
 
-        public Task<Car> GetByIdAsync(int id)
-            => _repository.GetByIdAsync(id);
+        public async Task<Car> GetByIdAsync(int id)
+            => await _repository.GetByIdAsync(id);
 
         public async Task<bool> TryUpdateAsync(int id, Car car)
         {

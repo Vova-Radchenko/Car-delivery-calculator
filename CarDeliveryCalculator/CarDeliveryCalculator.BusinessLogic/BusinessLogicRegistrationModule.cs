@@ -16,6 +16,10 @@ namespace CarDeliveryCalculator.BusinessLogic
         {
             builder.RegisterModule<DataAccessRegistrationModule>();
             builder.RegisterType<CarService>().As<ICarService>();
+            builder.RegisterType<CityService>().As<ICityService>();
+            builder.RegisterType<CustomerService>().As<ICustomerService>();
+            builder.RegisterType<OrderService>().As<IOrderService>();
+            builder.RegisterType<RouteService>().As<IRouteService>();
         }
     }
 }

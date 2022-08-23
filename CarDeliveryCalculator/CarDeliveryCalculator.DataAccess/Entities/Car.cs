@@ -14,5 +14,6 @@ namespace CarDeliveryCalculator.DataAccess.Entities
         public int Year { get; set; }
         public int EngineCapacity { get; set; }
         public int Weight { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

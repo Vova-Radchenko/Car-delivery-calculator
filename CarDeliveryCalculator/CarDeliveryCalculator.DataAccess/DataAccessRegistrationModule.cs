@@ -3,10 +3,6 @@ using CarDeliveryCalculator.DataAccess.Repositories;
 using CarDeliveryCalculator.DataAccess.Repositories.Interfaces;
 using CarDeliveryCalculator.DataAccess.Repositories.Implementation;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CarDeliveryCalculator.DataAccess
 {
@@ -16,6 +12,10 @@ namespace CarDeliveryCalculator.DataAccess
         {
             builder.RegisterType<CarDeliveryDataContext>().AsSelf();
             builder.RegisterType<CarRepository>().As<ICarRepository>();
+            builder.RegisterType<CityRepository>().As<ICityRepository>();
+            builder.RegisterType<CustomerRepository>().As<ICustomerRepository>();
+            builder.RegisterType<OrderRepository>().As<IOrderRepository>();
+            builder.RegisterType<RouteRepository>().As<IRouteRepository>();
         }
     }
 }

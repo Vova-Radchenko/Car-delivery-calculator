@@ -13,7 +13,7 @@ namespace CarDeliveryCalculator.BusinessLogic.Services.Implementation
 
         public OrderService(IOrderRepository repository)
         {
-            _repository = repository;
+            this._repository = repository;
         }
 
         public async Task AddAsync(Order order)
