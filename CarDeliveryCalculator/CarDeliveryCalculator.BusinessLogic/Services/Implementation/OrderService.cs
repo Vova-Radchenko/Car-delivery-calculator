@@ -25,6 +25,9 @@ namespace CarDeliveryCalculator.BusinessLogic.Services.Implementation
         public async Task<ICollection<Order>> GetAllAsync()
             => await this._repository.GetAllAsync();
 
+        public async Task<ICollection<Order>> GetAllForCustomer(int customerId) 
+            => await this._repository.GetAllForCustomer(customerId);
+
         public async Task<Order> GetByIdAsync(int id)
             => await this._repository.GetByIdAsync(id);
 

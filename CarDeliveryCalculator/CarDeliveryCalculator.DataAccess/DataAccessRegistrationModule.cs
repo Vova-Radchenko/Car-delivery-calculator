@@ -10,7 +10,7 @@ namespace CarDeliveryCalculator.DataAccess
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<CarDeliveryDataContext>().AsSelf();
+            builder.RegisterType<CarDeliveryDataContext>().AsSelf().SingleInstance();
             builder.RegisterType<CarRepository>().As<ICarRepository>();
             builder.RegisterType<CityRepository>().As<ICityRepository>();
             builder.RegisterType<CustomerRepository>().As<ICustomerRepository>();
