@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using CarDeliveryCalculator.DataAccess.Entities;
 using CarDeliveryCalculator.DataAccess.Repositories.Interfaces;
-using CarDeliveryCalculator.BusinessLogic;
 using Newtonsoft.Json;
 using System.Net.Http;
 using GeoCoordinatePortable;
+using CarDeliveryCalculator.BusinessLogic.WorkWithCoordinates;
 
 namespace CarDeliveryCalculator.BusinessLogic.Services.Implementation
 {

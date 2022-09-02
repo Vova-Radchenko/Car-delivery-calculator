@@ -43,7 +43,7 @@ namespace CarDeliveryCalculator.WebAPI.Controllers
         public async Task<IActionResult> CalculateCost([FromRoute] int id)
         {
             var order = await this._orderService.GetByIdAsync(id);
-            var cost = this._orderService.CalculateCostAsync(order.Route.StartOfRoute, order.Route.EndOfRoute);
+            var cost = this._orderService.CalculateCostAsync(order.Route.StartOfRoute, order.Route.EndOfRoute, order.Car);
 
             return this.Ok(cost);
         }
