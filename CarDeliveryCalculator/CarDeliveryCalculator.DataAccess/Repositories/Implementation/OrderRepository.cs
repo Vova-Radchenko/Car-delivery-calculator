@@ -46,5 +46,14 @@ namespace CarDeliveryCalculator.DataAccess.Repositories.Implementation
             this._context.Orders.Update(order);
             await this._context.SaveChangesAsync();
         }
+
+        public async Task<Customer> GetCustomerById(int id) 
+            => await this._context.Customers.FirstOrDefaultAsync(x => x.Id == id);
+
+        public async Task<Car> GetCarById(int id)
+            => await this._context.Cars.FirstOrDefaultAsync(x => x.Id == id);
+
+        public async Task<Route> GetRouteById(int id)
+            => await this._context.Routes.FirstOrDefaultAsync(x => x.Id == id);
     }
 }

@@ -12,10 +12,5 @@ namespace CarDeliveryCalculator.DataAccess.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public string Country { get; set; }
-        //
-        //public virtual ICollection<Route> StartOfRoute { get; set; }
-        //public virtual ICollection<Route> EndOfRoute { get; set; }
-        //[NotMapped]
-        //public virtual ICollection<Route> Routes { get; set; }
     }
 }

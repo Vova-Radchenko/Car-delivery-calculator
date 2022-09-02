@@ -10,9 +10,7 @@ namespace CarDeliveryCalculator.DataAccess.Entities
     public class Route
     {
         public int Id { get; set; }
-        //[NotMapped]
         public virtual City StartOfRoute { get; set; }
-        //[NotMapped]
         public virtual City EndOfRoute { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
     }

@@ -46,8 +46,6 @@ namespace CarDeliveryCalculator.WebAPI.Controllers
         {
             var route = this._mapper.Map<Route>(routeModel);
 
-            //var route = new Route();
-
             if (routeModel.StartOfRouteId != 0)
             {
                 var startOfRoute = await this._cityService.GetByIdAsync(routeModel.StartOfRouteId);

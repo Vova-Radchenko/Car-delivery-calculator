@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using CarDeliveryCalculator.DataAccess.Entities;
 using CarDeliveryCalculator.DataAccess.Repositories.Interfaces;
+using CarDeliveryCalculator.BusinessLogic;
+using Newtonsoft.Json;
+using System.Net.Http;
+using GeoCoordinatePortable;
 
 namespace CarDeliveryCalculator.BusinessLogic.Services.Implementation
 {
@@ -47,6 +51,38 @@ namespace CarDeliveryCalculator.BusinessLogic.Services.Implementation
             }
 
             return false;
+        }
+
+        public async Task FillOrderByIdAsync(Order order, int customerId, int carId, int routeId)
+        {
+            var customer = await this._repository.GetCustomerById(customerId);
+            var car = await this._repository.GetCarById(carId);
+            var route = await this._repository.GetRouteById(routeId);
+
+            if (customer == null || car == null || route == null)
+                throw new Exception("Wrong id!");
+
+            order.Customer = customer;
+            order.Car = car;
+            order.Route = route;
+        }
+
+        public async Task<double> CalculateCostAsync(City city1, City city2, Car car)
+        {            
+            var city1Coordinate = await Coordinates.GetCoordinatesAsync(city1);
+            var city2Coordinate = await Coordinates.GetCoordinatesAsync(city2);
+
+            var pin1 = new GeoCoordinate(city1Coordinate.latitude, city1Coordinate.longitude);
+            var pin2 = new GeoCoordinate(city2Coordinate.latitude, city2Coordinate.longitude);
+
+            var distance = pin1.GetDistanceTo(pin2);
+
+            var cost = distance * 45 
+                * (car.Weight > 2000 ? 1.5 : 1) 
+                * (car.Year < 2012 ? 1.35 : 1.05)
+                * (car.EngineCapacity/1000);
+
+            return cost;
         }
     }
 }
