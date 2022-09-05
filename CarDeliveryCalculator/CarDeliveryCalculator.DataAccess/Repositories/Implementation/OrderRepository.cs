@@ -35,7 +35,7 @@ namespace CarDeliveryCalculator.DataAccess.Repositories.Implementation
         public async Task<ICollection<Order>> GetAllForCustomer(int customerId)
         {
             var customer = this._context.Customers.Where(x => x.Id == customerId);
-            return await this._context.Orders.Where(x => x.Customer == customer).ToListAsync();
+            return await this._context.Orders.Where(x => x.Customer.Id == customerId).ToListAsync();
         }
 
         public async Task<Order> GetByIdAsync(int id) 

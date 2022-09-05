@@ -75,6 +75,29 @@ namespace CarDeliveryCalculator.UnitTests.ControllersTests
         }
 
         [Test]
+        public async Task CalculateCost_CallCalculateCostAsync()
+        {
+            var service = new Mock<IOrderService>();
+            var mapper = new Mock<IMapper>();
+            var controller = new OrderController(service.Object, mapper.Object);
+            var order = this._fixture.Create<Order>();
+            var cost = this._fixture.Create<int>();
+            var id = this._fixture.Create<int>();
+            service.Setup(x => x.GetByIdAsync(id)).ReturnsAsync(order);
+            service.Setup(x => x.CalculateCostAsync(order.Route.StartOfRoute, order.Route.EndOfRoute, order.Car)).ReturnsAsync(cost);
+
+            var result = controller.CalculateCost(id);
+            var okObject = await result as OkObjectResult;
+
+            using (new AssertionScope())
+            {
+                okObject.StatusCode.Should().Be((int)HttpStatusCode.OK);
+                service.Verify(x => x.GetByIdAsync(id), Times.Once());
+                service.Verify(x => x.CalculateCostAsync(order.Route.StartOfRoute, order.Route.EndOfRoute, order.Car), Times.Once());
+            }
+        }
+
+        [Test]
         public async Task Create_CallAddAsync()
         {
             var service = new Mock<IOrderService>();
