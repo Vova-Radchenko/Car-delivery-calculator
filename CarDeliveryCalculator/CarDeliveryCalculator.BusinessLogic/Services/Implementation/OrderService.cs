@@ -8,16 +8,19 @@ using Newtonsoft.Json;
 using System.Net.Http;
 using GeoCoordinatePortable;
 using CarDeliveryCalculator.BusinessLogic.WorkWithCoordinates;
+using CarDeliveryCalculator.BusinessLogic.Exceptions;
 
 namespace CarDeliveryCalculator.BusinessLogic.Services.Implementation
 {
     public class OrderService : IOrderService
     {
         private readonly IOrderRepository _repository;
+        private readonly ICoordinates _coordinates;
 
-        public OrderService(IOrderRepository repository)
+        public OrderService(IOrderRepository repository, ICoordinates coordinates)
         {
             this._repository = repository;
+            this._coordinates = coordinates;
         }
 
         public async Task AddAsync(Order order)
@@ -60,7 +63,7 @@ namespace CarDeliveryCalculator.BusinessLogic.Services.Implementation
             var route = await this._repository.GetRouteById(routeId);
 
             if (customer == null || car == null || route == null)
-                throw new Exception("Wrong id!");
+                throw new IncorrectIdException("Wrong id!");
 
             order.Customer = customer;
             order.Car = car;
@@ -69,20 +72,20 @@ namespace CarDeliveryCalculator.BusinessLogic.Services.Implementation
 
         public async Task<double> CalculateCostAsync(City city1, City city2, Car car)
         {            
-            var city1Coordinate = await Coordinates.GetCoordinatesAsync(city1);
-            var city2Coordinate = await Coordinates.GetCoordinatesAsync(city2);
+            var city1Coordinate = await this._coordinates.GetCoordinatesAsync(city1);
+            var city2Coordinate = await this._coordinates.GetCoordinatesAsync(city2);
 
             var pin1 = new GeoCoordinate(city1Coordinate.latitude, city1Coordinate.longitude);
             var pin2 = new GeoCoordinate(city2Coordinate.latitude, city2Coordinate.longitude);
 
-            var distance = pin1.GetDistanceTo(pin2);
+            var distance = pin1.GetDistanceTo(pin2) / 100;
 
             var cost = distance * 45 
                 * (car.Weight > 2000 ? 1.5 : 1) 
                 * (car.Year < 2012 ? 1.35 : 1.05)
-                * (car.EngineCapacity/1000);
+                * (car.EngineCapacity/1000 == 0 ? 1 : car.EngineCapacity / 1000);
 
-            return cost;
+            return Math.Round(cost, 2);
         }
     }
 }

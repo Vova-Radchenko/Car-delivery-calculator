@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CarDeliveryCalculator.BusinessLogic.WorkWithCoordinates;
 
 namespace CarDeliveryCalculator.BusinessLogic
 {
@@ -20,6 +21,7 @@ namespace CarDeliveryCalculator.BusinessLogic
             builder.RegisterType<CustomerService>().As<ICustomerService>();
             builder.RegisterType<OrderService>().As<IOrderService>();
             builder.RegisterType<RouteService>().As<IRouteService>();
+            builder.RegisterType<Coordinates>().As<ICoordinates>();
         }
     }
 }

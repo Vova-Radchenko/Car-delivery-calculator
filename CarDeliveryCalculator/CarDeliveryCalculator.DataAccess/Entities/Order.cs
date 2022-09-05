@@ -12,6 +12,6 @@ namespace CarDeliveryCalculator.DataAccess.Entities
         public virtual Customer Customer { get; set; }
         public virtual Car Car { get; set; }
         public virtual Route Route { get; set; }
-        public int Price { get; set; }
+        public double Price { get; set; }
     }
 }

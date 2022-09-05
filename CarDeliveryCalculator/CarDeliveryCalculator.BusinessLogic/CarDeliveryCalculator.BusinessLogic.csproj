@@ -14,4 +14,10 @@
     <ProjectReference Include="..\CarDeliveryCalculator.DataAccess\CarDeliveryCalculator.DataAccess.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="WorkWithCoordinates\CountriesCode.csv">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

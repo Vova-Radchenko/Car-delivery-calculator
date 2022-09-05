@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using CarDeliveryCalculator.WebAPI.Models;
 using CarDeliveryCalculator.DataAccess.Entities;
 using System;
+using CarDeliveryCalculator.BusinessLogic.Exceptions;
 
 namespace CarDeliveryCalculator.WebAPI.Controllers
 {
@@ -43,9 +44,22 @@ namespace CarDeliveryCalculator.WebAPI.Controllers
         public async Task<IActionResult> CalculateCost([FromRoute] int id)
         {
             var order = await this._orderService.GetByIdAsync(id);
-            var cost = this._orderService.CalculateCostAsync(order.Route.StartOfRoute, order.Route.EndOfRoute, order.Car);
+            var cost = await this._orderService.CalculateCostAsync(order.Route.StartOfRoute, order.Route.EndOfRoute, order.Car);
 
-            return this.Ok(cost);
+            return this.Ok($"{cost} грн");
+        }
+
+        [HttpPost("{id:int}/confirm-order")]
+        public async Task<IActionResult> ConfirmOrder([FromRoute] int id)
+        {
+            var order = await this._orderService.GetByIdAsync(id);
+            var cost = await this._orderService.CalculateCostAsync(order.Route.StartOfRoute, order.Route.EndOfRoute, order.Car);
+
+            order.Price = cost;
+
+            var result = await this._orderService.TryUpdateAsync(id, order);
+
+            return result ? this.Ok() : this.NotFound();
         }
 
         [HttpPost("create")]
@@ -60,7 +74,7 @@ namespace CarDeliveryCalculator.WebAPI.Controllers
             {
                 await this._orderService.FillOrderByIdAsync(order, orderModel.CustomerId, orderModel.CarId, orderModel.RouteId);
             }
-            catch(Exception ex)
+            catch(IncorrectIdException ex)
             {
                 return this.BadRequest(ex.Message);
             }
