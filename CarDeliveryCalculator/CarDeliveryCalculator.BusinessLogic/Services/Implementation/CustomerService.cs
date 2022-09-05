@@ -12,7 +12,7 @@ namespace CarDeliveryCalculator.BusinessLogic.Services.Implementation
 
         public CustomerService(ICustomerRepository repository)
         {
-            _repository = repository;
+            this._repository = repository;
         }
 
         public async Task AddAsync(Customer customer) 
@@ -21,11 +21,11 @@ namespace CarDeliveryCalculator.BusinessLogic.Services.Implementation
         public async Task DeleteAsync(Customer customer) 
             => await _repository.DeleteAsync(customer);
 
-        public Task<ICollection<Customer>> GetAllAsync() 
-            => _repository.GetAllAsync();
+        public async Task<ICollection<Customer>> GetAllAsync() 
+            => await _repository.GetAllAsync();
 
-        public Task<Customer> GetByIdAsync(int id) 
-            => _repository.GetByIdAsync(id);
+        public async Task<Customer> GetByIdAsync(int id) 
+            => await _repository.GetByIdAsync(id);
 
         public async Task<bool> TryUpdateAsync(int id, Customer customer)
         {

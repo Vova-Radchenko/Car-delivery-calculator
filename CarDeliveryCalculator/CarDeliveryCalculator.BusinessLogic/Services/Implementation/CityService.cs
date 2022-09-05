@@ -16,17 +16,17 @@ namespace CarDeliveryCalculator.BusinessLogic.Services.Implementation
             this._repository = repository;
         }
 
-        public Task AddAsync(City city)
-            => this._repository.AddAsync(city);
+        public async Task AddAsync(City city)
+            => await this._repository.AddAsync(city);
 
-        public Task DeleteAsync(City city)
-            => this._repository.DeleteAsync(city);
+        public async Task DeleteAsync(City city)
+            => await this._repository.DeleteAsync(city);
 
-        public Task<ICollection<City>> GetAllAsync()
-            => this._repository.GetAllAsync();
+        public async Task<ICollection<City>> GetAllAsync()
+            => await this._repository.GetAllAsync();
 
-        public Task<City> GetByIdAsync(int id)
-            => this._repository.GetByIdAsync(id);
+        public async Task<City> GetByIdAsync(int id)
+            => await this._repository.GetByIdAsync(id);
 
         public async Task<bool> TryUpdateAsync(int id, City city)
         {

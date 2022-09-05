@@ -11,8 +11,12 @@ namespace CarDeliveryCalculator.DataAccess.Repositories.Interfaces
     {
         Task AddAsync(Order order);
         Task<ICollection<Order>> GetAllAsync();
+        Task<ICollection<Order>> GetAllForCustomer(int customerId);
         Task<Order> GetByIdAsync(int id);
         Task UpdateAsync(Order order);
         Task DeleteAsync(Order order);
+        Task<Customer> GetCustomerById(int id);
+        Task<Car> GetCarById(int id);
+        Task<Route> GetRouteById(int id);
     }
 }

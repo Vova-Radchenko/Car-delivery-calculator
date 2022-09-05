@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace CarDeliveryCalculator.DataAccess.Repositories.Implementation
 {
@@ -31,13 +32,28 @@ namespace CarDeliveryCalculator.DataAccess.Repositories.Implementation
         public async Task<ICollection<Order>> GetAllAsync() 
             => await this._context.Orders.ToListAsync();
 
-        public Task<Order> GetByIdAsync(int id) 
-            => this._context.Orders.FirstOrDefaultAsync(x => x.Id == id);
+        public async Task<ICollection<Order>> GetAllForCustomer(int customerId)
+        {
+            var customer = this._context.Customers.Where(x => x.Id == customerId);
+            return await this._context.Orders.Where(x => x.Customer == customer).ToListAsync();
+        }
+
+        public async Task<Order> GetByIdAsync(int id) 
+            => await this._context.Orders.FirstOrDefaultAsync(x => x.Id == id);
 
         public async Task UpdateAsync(Order order)
         {
             this._context.Orders.Update(order);
             await this._context.SaveChangesAsync();
         }
+
+        public async Task<Customer> GetCustomerById(int id) 
+            => await this._context.Customers.FirstOrDefaultAsync(x => x.Id == id);
+
+        public async Task<Car> GetCarById(int id)
+            => await this._context.Cars.FirstOrDefaultAsync(x => x.Id == id);
+
+        public async Task<Route> GetRouteById(int id)
+            => await this._context.Routes.FirstOrDefaultAsync(x => x.Id == id);
     }
 }

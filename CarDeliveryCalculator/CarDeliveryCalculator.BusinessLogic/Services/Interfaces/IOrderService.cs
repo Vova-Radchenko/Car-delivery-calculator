@@ -11,8 +11,11 @@ namespace CarDeliveryCalculator.BusinessLogic.Services.Interfaces
     {
         Task AddAsync(Order order);
         Task<ICollection<Order>> GetAllAsync();
+        Task<ICollection<Order>> GetAllForCustomer(int customerId);
         Task<Order> GetByIdAsync(int id);
         Task DeleteAsync(Order order);
         Task<bool> TryUpdateAsync(int id, Order order);
+        Task FillOrderByIdAsync(Order order, int customerId, int carId, int routeId);
+        Task<double> CalculateCostAsync(City city1, City city2, Car car);
     }
 }
