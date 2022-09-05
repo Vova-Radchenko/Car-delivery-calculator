@@ -78,7 +78,7 @@ namespace CarDeliveryCalculator.BusinessLogic.Services.Implementation
             var pin1 = new GeoCoordinate(city1Coordinate.latitude, city1Coordinate.longitude);
             var pin2 = new GeoCoordinate(city2Coordinate.latitude, city2Coordinate.longitude);
 
-            var distance = pin1.GetDistanceTo(pin2) / 100;
+            var distance = pin1.GetDistanceTo(pin2) / 1000;
 
             var cost = distance * 45 
                 * (car.Weight > 2000 ? 1.5 : 1) 
